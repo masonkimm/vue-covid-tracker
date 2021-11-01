@@ -5,6 +5,21 @@
     <DataTitle :title="title" :date="dataDate" />
     <DataBoxes :stats="stats" />
     <CountrySelect @get-country="getCountryData" :countries="countries" />
+    <button
+      v-if="stats.Country"
+      @click="clearCountryData"
+      class="
+        bg-green-500
+        text-white
+        rounded
+        p-3
+        mt-10
+        focus:outline-none
+        hover:bg-green-700
+      "
+    >
+      clear country
+    </button>
   </main>
   <main v-else class="flex flex-col align-center justify-center text-center">
     <div class="text-gray-500 text-3xl mt-10 mb-6">
@@ -35,6 +50,7 @@ export default {
       dataDate: '',
       stats: {},
       countries: [],
+      globalData: {},
       loadingImage: require('../assets/hourglass.gif'),
     };
   },
@@ -45,16 +61,21 @@ export default {
       // console.log(data);
       return data;
     },
-    getCountryData(country) {
-      this.stats = country;
-      this.title = country.Country;
+    getCountryData(selectedCountry) {
+      this.stats = selectedCountry;
+      this.title = selectedCountry.Country;
+    },
+    async clearCountryData() {
+      this.stats = this.globalData;
+      this.title = 'Global';
     },
   },
   async created() {
     const data = await this.fetchData();
-    // console.log(data);
+    console.log(data);
     this.dataDate = data.Date;
     this.stats = data.Global;
+    this.globalData = data.Global;
     this.countries = data.Countries;
     this.loading = false;
   },
