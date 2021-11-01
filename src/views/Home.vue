@@ -1,7 +1,9 @@
 <template>
   <!-- {{ dateBuilder(dataDate) }}
   new deaths: {{ stats.newDeaths }} -->
-  <main v-if="!loading">show Data</main>
+  <main v-if="!loading">
+    <DataTitle :title="title" :date="dataDate" />
+  </main>
   <main v-else class="flex flex-col align-center justify-center text-center">
     <div class="text-gray-500 text-3xl mt-10 mb-6">
       fetching Data
@@ -13,10 +15,13 @@
 <script>
 // @ is an alias to /src
 // import Header from '@/components/Header.vue';
+import DataTitle from '../components/DataTitle.vue';
 
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    DataTitle,
+  },
   data() {
     return {
       loading: true,
@@ -33,10 +38,6 @@ export default {
       const data = await res.json();
       // console.log(data);
       return data;
-    },
-    dateBuilder(date) {
-      let newDate = new Date(date).toDateString();
-      return newDate;
     },
   },
   async created() {
