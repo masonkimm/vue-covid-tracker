@@ -3,6 +3,7 @@
   new deaths: {{ stats.newDeaths }} -->
   <main v-if="!loading">
     <DataTitle :title="title" :date="dataDate" />
+    <DataBoxes :stats="stats" />
   </main>
   <main v-else class="flex flex-col align-center justify-center text-center">
     <div class="text-gray-500 text-3xl mt-10 mb-6">
@@ -16,11 +17,13 @@
 // @ is an alias to /src
 // import Header from '@/components/Header.vue';
 import DataTitle from '../components/DataTitle.vue';
+import DataBoxes from '../components/DataBoxes.vue';
 
 export default {
   name: 'Home',
   components: {
     DataTitle,
+    DataBoxes,
   },
   data() {
     return {
