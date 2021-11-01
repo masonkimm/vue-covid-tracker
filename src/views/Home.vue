@@ -4,6 +4,7 @@
   <main v-if="!loading">
     <DataTitle :title="title" :date="dataDate" />
     <DataBoxes :stats="stats" />
+    <CountrySelect @get-country="getCountryData" :countries="countries" />
   </main>
   <main v-else class="flex flex-col align-center justify-center text-center">
     <div class="text-gray-500 text-3xl mt-10 mb-6">
@@ -18,11 +19,13 @@
 // import Header from '@/components/Header.vue';
 import DataTitle from '../components/DataTitle.vue';
 import DataBoxes from '../components/DataBoxes.vue';
+import CountrySelect from '../components/CountrySelect.vue';
 
 export default {
   name: 'Home',
   components: {
     DataTitle,
+    CountrySelect,
     DataBoxes,
   },
   data() {
@@ -42,10 +45,14 @@ export default {
       // console.log(data);
       return data;
     },
+    getCountryData(country) {
+      this.stats = country;
+      this.title = country.Country;
+    },
   },
   async created() {
     const data = await this.fetchData();
-    console.log(data);
+    // console.log(data);
     this.dataDate = data.Date;
     this.stats = data.Global;
     this.countries = data.Countries;
